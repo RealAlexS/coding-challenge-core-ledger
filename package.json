@@ -10,7 +10,10 @@
     "remove": "sst remove",
     "console": "sst console",
     "typecheck": "tsc --noEmit",
-    "generate:migrations": "cd packages/core && yarn drizzle-kit generate pg"
+    "generate:migrations": "cd packages/core && pnpm drizzle-kit generate pg",
+    "nuke:strategic": "./scripts/nuke-strategic.sh",
+    "nuke:tactical": "./scripts/nuke-tactical.sh",
+    "ci": "./scripts/rm-node-modules.sh && pnpm install --frozen-lockfile"
   },
   "devDependencies": {
     "sst": "^2.43.1",

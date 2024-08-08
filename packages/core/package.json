@@ -14,7 +14,10 @@
   },
   "dependencies": {
     "@aws-sdk/client-rds-data": "^3.583.0",
+    "aws-sdk": "^2.1652.0",
+    "bignumber.js": "^9.1.2",
     "drizzle-orm": "^0.30.10",
+    "drizzle-zod": "^0.5.1",
     "ulid": "^2.3.0",
     "zod": "^3.23.8"
   }

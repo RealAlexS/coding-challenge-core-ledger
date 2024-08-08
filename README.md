@@ -61,3 +61,33 @@ Remember to remove resources after you are done to avoid unnecessary AWS billing
 ```sh
 pnpm run remove
 ```
+
+# Challenge
+
+## Overview
+
+Develop a system to track money transactions in a financial ledger, using TypeScript in a serverless environment.
+
+The provided example repository demonstrates a simple user and notification domain. Both are implemented using AWS Lambda and deployed with the Serverless Stack Toolkit (SST). The repository also illustrates how to interact with the API to create and retrieve users, publish domain events, listen to these events, and send out notifications such as emails to users. The focus is on the design and structure of the solution, code organization, interaction with repositories, and handling of business logic.
+
+## **Scenario:**
+
+Users can deposit and withdraw money. A fee is applied to each deposit, with the remainder being credited to or withdrawn from the user's account. It's crucial to monitor these transactions to maintain accurate records of account balances (users, bank, company,…) at specific times. Double-entry accounting is a suitable method for tracking this type of money movement.
+
+### Main Goals
+
+1. **Create Transactions**:
+    - Introduce API calls to generate transactions (both deposits and withdrawals) for users.
+    - Apply a flat fee of 1€ to each transaction.
+2. **Retrieve Transactions**:
+    - Create API calls to retrieve transactions for a specific user.
+3. **User Balance**:
+    - Develop API calls to check the balance of a specific user.
+4. **End-of-Day (EOD) Report**:
+    - Build an API to produce an EOD report. This report should validate all balances, confirm that accounts are in alignment, and highlight any discrepancies in the ledger.
+    - For example, we have €1,000 in our external bank account. Does this match our internal balances?
+
+### Key Requirements
+
+- Make sure all financial transactions are trackable and verifiable for accuracy.
+- Use double-entry accounting to keep accurate balances.

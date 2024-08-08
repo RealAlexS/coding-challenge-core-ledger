@@ -1,4 +1,4 @@
-import { StackContext, RDS, Script } from "sst/constructs";
+import { RDS, Script, StackContext } from "sst/constructs";
 
 export function Database({ stack }: StackContext) {
   const rds = new RDS(stack, "sharedRds", {

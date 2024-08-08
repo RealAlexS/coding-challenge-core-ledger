@@ -1,6 +1,7 @@
-import { AwsDataApiPgDatabase } from "drizzle-orm/aws-data-api/pg";
-import { PgColumn, PgTable } from "drizzle-orm/pg-core";
 import { InferSelectModel, eq } from "drizzle-orm";
+import { PgColumn, PgTable } from "drizzle-orm/pg-core";
+
+import { AwsDataApiPgDatabase } from "drizzle-orm/aws-data-api/pg";
 import { ulid } from "ulid";
 
 export function BaseRepository<T extends PgTable & { id: PgColumn }>(
@@ -13,6 +14,7 @@ export function BaseRepository<T extends PgTable & { id: PgColumn }>(
 
   return class BaseRepository {
     db = db;
+    model = model;
     async get(id: string) {
       return doTransaction(
         this.db,
@@ -28,7 +30,7 @@ export function BaseRepository<T extends PgTable & { id: PgColumn }>(
     }
     async list(params?: (query: fromType) => fromType) {
       return doTransaction(this.db, async (connection) =>
-        (params || ((q) => q))(connection.select().from(model))
+        (params || ((q) => q))(connection.select().from(model)).execute()
       );
     }
     async update(id: string, data: insertType) {
@@ -80,6 +82,30 @@ export function BaseRepository<T extends PgTable & { id: PgColumn }>(
             .then((i) => i[0]) as InferSelectModel<T>;
         }
       });
+    }
+    async query(by: PgColumn, value: any) {
+      return doTransaction(
+        this.db,
+        async (connection) =>
+          await connection
+            .select()
+            .from(model)
+            .where(eq(by, value))
+            .execute()
+      );
+    }
+    async getBy(by: PgColumn, id: string ) {
+      return doTransaction(
+        this.db,
+        async (connection) =>
+          (
+            await connection
+              .select()
+              .from(model)
+              .where(eq(by, id))
+              .execute()
+          )[0]
+      );
     }
   };
 }
